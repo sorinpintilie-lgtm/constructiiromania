@@ -1,0 +1,107 @@
+.scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.aframe {
+  position: absolute;
+  width: min(78vw, 980px);
+  aspect-ratio: 1 / 1;
+  transform-style: preserve-3d;
+  --af-x: 0px;
+  --af-y: 0px;
+  --af-z: 0px;
+  --af-rx: 10deg;
+  --af-ry: -8deg;
+  --af-s: 1;
+  --mx: 0deg;
+  --my: 0deg;
+  transform: translate3d(var(--af-x), var(--af-y), var(--af-z)) rotateX(calc(var(--af-rx) + var(--my))) rotateY(calc(var(--af-ry) + var(--mx))) scale(var(--af-s));
+  will-change: transform, opacity;
+  filter: drop-shadow(0 28px 40px rgba(11, 18, 32, 0.22));
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.front {
+  clip-path: polygon(50% 2%, 6% 98%, 94% 98%);
+  background: radial-gradient(120% 120% at 30% 10%, rgba(207, 230, 243, 0.85), rgba(15, 27, 45, 0.12) 48%, rgba(15, 27, 45, 0.26)),
+    linear-gradient(135deg, rgba(184, 137, 90, 0.06), rgba(142, 163, 181, 0.12));
+  border: 1px solid rgba(142, 163, 181, 0.32);
+  box-shadow: inset 0 0 0 1px rgba(207, 230, 243, 0.18);
+  transform: translateZ(0px);
+}
+
+.extrude {
+  width: 22%;
+  height: 100%;
+  right: -16%;
+  left: auto;
+  clip-path: polygon(0% 8%, 100% 14%, 100% 92%, 0% 98%);
+  background: linear-gradient(180deg, rgba(15, 27, 45, 0.55), rgba(15, 27, 45, 0.28)),
+    linear-gradient(90deg, rgba(142, 163, 181, 0.26), rgba(184, 137, 90, 0.1));
+  border: 1px solid rgba(142, 163, 181, 0.22);
+  transform: translateZ(-40px) rotateY(-65deg) translateX(-22px);
+  transform-origin: left center;
+  opacity: 0.9;
+}
+
+.ridge {
+  position: absolute;
+  left: 50%;
+  top: 3.5%;
+  width: 54%;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, rgba(207, 230, 243, 0), rgba(207, 230, 243, 0.85), rgba(207, 230, 243, 0));
+  opacity: 0.9;
+}
+
+.lines {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(50% 2%, 6% 98%, 94% 98%);
+}
+
+.beamH {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 44%;
+  height: 1px;
+  background: rgba(207, 230, 243, 0.55);
+  box-shadow: 0 0 0 1px rgba(142, 163, 181, 0.1);
+}
+
+.beamV {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  bottom: 10%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: rgba(207, 230, 243, 0.45);
+}
+
+.shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -9%;
+  width: 70%;
+  height: 18%;
+  transform: translateX(-50%) translateZ(-80px);
+  background: radial-gradient(closest-side, rgba(11, 18, 32, 0.25), rgba(11, 18, 32, 0));
+  filter: blur(10px);
+  opacity: 0.9;
+}
+

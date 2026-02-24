@@ -1,0 +1,1667 @@
+# Constructii Durabile - Next.js Project
+
+## Project Structure
+
+```
+constructii/
+├── package.json
+├── next.config.ts
+├── tsconfig.json
+├── eslint.config.mjs
+├── postcss.config.mjs
+├── README.md
+├── .gitignore
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── globals.css
+│   ├── favicon.ico
+│   └── components/
+│       ├── FAQAccordion.tsx
+│       ├── PromoBar.tsx
+│       ├── StickyHeader.tsx
+│       ├── TriangleRevealHero.tsx
+│       ├── AFrame3D.tsx
+│       ├── AFrame3D.module.css
+│       ├── LandingSections.tsx
+│       └── ProcessStory.tsx
+└── public/
+    ├── images/
+    │   ├── aframe-hero.webp
+    │   ├── foisor-1.jpg
+    │   ├── model-compact.webp
+    │   ├── model-family.jpg
+    │   ├── model-panorama.webp
+    │   ├── terasa-1.webp
+    │   ├── terasa-2.jpg
+    │   └── skyro-LOGO-6A-final -without tagline-01 (3).png
+    ├── file.svg
+    ├── globe.svg
+    ├── next.svg
+    ├── vercel.svg
+    └── window.svg
+```
+
+---
+
+## Configuration Files
+
+### package.json
+```json
+{
+  "name": "site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "gsap": "^3.14.2",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+```
+
+### next.config.ts
+```typescript
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+```
+
+### tsconfig.json
+```json
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+```
+
+### eslint.config.mjs
+```javascript
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;
+```
+
+### postcss.config.mjs
+```javascript
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+```
+
+### .gitignore
+```
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+```
+
+---
+
+## App Files
+
+### app/layout.tsx
+```tsx
+import type { Metadata } from "next";
+import { Plus_Jakarta_Sans, Sora } from "next/font/google";
+import "./globals.css";
+
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-inter",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const sora = Sora({
+  variable: "--font-space-grotesk",
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600", "700"],
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://constructiidurabile.ro"),
+  title:
+    "Constructii Durabile – Cabane A-Frame, Case din Lemn, Terase & Foișoare",
+  description:
+    "Constructii Durabile proiectează și execută cabane A-Frame, case din lemn, terase și foișoare. Structuri corect executate, izolație pe straturi, montaj atent și garanție.",
+  openGraph: {
+    title:
+      "Constructii Durabile – Cabane A-Frame, Case din Lemn, Terase & Foișoare",
+    description:
+      "Proiectare + execuție pentru cabane A-Frame, case din lemn, terase și foișoare. Durabilitate, detalii curate și garanție.",
+    locale: "ro_RO",
+    type: "website",
+    images: [
+      {
+        url: "/images/aframe-hero.webp",
+        width: 1200,
+        height: 630,
+        alt: "Cabana A-Frame Constructii Durabile",
+      },
+    ],
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="ro">
+      <body className={`${plusJakarta.variable} ${sora.variable} antialiased`}>
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+### app/page.tsx
+```tsx
+import { FAQAccordion } from "./components/FAQAccordion";
+import { PromoBar } from "./components/PromoBar";
+import { StickyHeader } from "./components/StickyHeader";
+import { TriangleRevealHero } from "./components/TriangleRevealHero";
+import {
+  AFrameProcessTimeline,
+  AngledGallery,
+  ContactCTA,
+  Footer,
+  ProofChips,
+  StaggeredModels,
+} from "./components/LandingSections";
+
+export default function Home() {
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Constructii Durabile",
+    description:
+      "Cabane A-Frame, case din lemn, terase și foișoare. Proiectare și execuție în România.",
+    areaServed: "România",
+    telephone: "+40 700 000 000",
+    url: "https://example.com",
+    image: "/images/aframe-hero.webp",
+    serviceType: [
+      "Cabane A-Frame",
+      "Case din lemn",
+      "Terase",
+      "Foișoare",
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
+      <PromoBar />
+      <StickyHeader />
+      <main>
+        <TriangleRevealHero />
+        <StaggeredModels />
+        <ProofChips />
+        <AFrameProcessTimeline />
+        <AngledGallery />
+        <FAQAccordion />
+        <ContactCTA />
+      </main>
+      <Footer />
+    </>
+  );
+}
+```
+
+### app/globals.css
+```css
+@import "tailwindcss";
+
+:root {
+  --promo-bar-height: 40px;
+  --header-height: 64px;
+  --ink-950: #0b1220;
+  --slate-900: #0f1b2d;
+  --glacier-200: #cfe6f3;
+  --mist-100: #eef6fb;
+  --pine-700: #1f4b45;
+  --steel-400: #8ea3b5;
+  --oak-500: #b8895a;
+  --ember-500: #d46a4c;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+}
+
+body {
+  padding-top: calc(var(--promo-bar-height) + env(safe-area-inset-top) + var(--header-height));
+  background: var(--mist-100);
+  color: var(--ink-950);
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    linear-gradient(160deg, rgb(238 246 251 / 0.96), rgb(228 240 249 / 0.9) 45%, rgb(214 228 242 / 0.88)),
+    radial-gradient(circle at 82% 10%, rgb(255 255 255 / 0.38), transparent 40%),
+    radial-gradient(circle at 20% 75%, rgb(207 230 243 / 0.22), transparent 45%);
+}
+
+.font-display {
+  font-family: var(--font-space-grotesk), Arial, sans-serif;
+}
+
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgb(142 163 181 / 0.13) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(142 163 181 / 0.12) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: radial-gradient(circle at 25% 20%, #fff 1px, transparent 1.5px),
+    radial-gradient(circle at 75% 80%, #fff 1px, transparent 1.5px);
+  background-size: 6px 6px;
+}
+
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -140%;
+  width: 44%;
+  height: 140%;
+  transform: rotate(20deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.2),
+    transparent
+  );
+  transition: left 0.55s ease;
+}
+
+.shine:hover::after,
+.shine:focus-visible::after {
+  left: 140%;
+}
+
+.aframe-mask {
+  clip-path: polygon(50% 3%, 98% 97%, 2% 97%);
+}
+
+.story-bg {
+  background:
+    linear-gradient(150deg, rgb(238 246 251 / 0.86), rgb(220 234 246 / 0.58) 46%, rgb(213 228 242 / 0.75)),
+    radial-gradient(circle at 78% 20%, rgb(255 255 255 / 0.3), transparent 38%);
+}
+
+.roof-plane {
+  border: 1px solid rgb(142 163 181 / 0.35);
+  box-shadow:
+    0 24px 70px rgb(11 18 32 / 0.25),
+    inset 0 1px 0 rgb(255 255 255 / 0.2),
+    inset 0 -18px 35px rgb(11 18 32 / 0.2);
+  background:
+    repeating-linear-gradient(
+      96deg,
+      rgb(82 101 120 / 0.16) 0px,
+      rgb(82 101 120 / 0.16) 2px,
+      rgb(226 236 245 / 0.05) 2px,
+      rgb(226 236 245 / 0.05) 7px
+    ),
+    linear-gradient(170deg, rgb(250 253 255 / 0.35) 0%, rgb(151 171 190 / 0.2) 45%, rgb(97 116 137 / 0.18) 100%);
+}
+
+.roof-plane-left {
+  clip-path: polygon(20% 3%, 98% 15%, 78% 97%, 2% 85%);
+  transform: rotate(-26deg) skewY(-6deg);
+  transform-origin: 84% 50%;
+}
+
+.roof-plane-right {
+  clip-path: polygon(2% 15%, 80% 3%, 98% 85%, 22% 97%);
+  transform: rotate(26deg) skewY(6deg);
+  transform-origin: 16% 50%;
+}
+
+.liquid-glass {
+  background: rgb(238 246 251 / 0.2);
+  backdrop-filter: blur(18px) saturate(1.22) contrast(1.06);
+  -webkit-backdrop-filter: blur(18px) saturate(1.22) contrast(1.06);
+}
+
+.liquid-distort {
+  opacity: 0.9;
+  background:
+    radial-gradient(circle at 22% 18%, rgb(255 255 255 / 0.28), transparent 28%),
+    radial-gradient(circle at 72% 66%, rgb(180 220 255 / 0.17), transparent 30%),
+    linear-gradient(120deg, rgb(255 255 255 / 0.08), transparent 30%, rgb(255 255 255 / 0.09) 60%, transparent 80%);
+  mix-blend-mode: screen;
+  animation: liquidShift 12s ease-in-out infinite alternate;
+  will-change: transform, opacity, filter;
+}
+
+.glass-highlight {
+  background:
+    radial-gradient(circle at 46% 10%, rgb(255 255 255 / 0.52), transparent 32%),
+    linear-gradient(120deg, transparent 0%, rgb(255 255 255 / 0.09) 24%, transparent 38%);
+}
+
+.glass-edge {
+  border: 1px solid rgb(255 255 255 / 0.34);
+  box-shadow:
+    inset 0 0 32px rgb(207 230 243 / 0.25),
+    0 0 24px rgb(168 204 236 / 0.18);
+}
+
+@keyframes liquidShift {
+  0% {
+    transform: translate3d(-1.2%, -0.8%, 0) scale(1.02);
+    filter: saturate(1.05);
+  }
+  100% {
+    transform: translate3d(1%, 1.1%, 0) scale(1.04);
+    filter: saturate(1.18);
+  }
+}
+
+@media (max-width: 1024px) {
+  .roof-plane {
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-distort {
+    animation: none;
+    opacity: 0.25;
+  }
+}
+```
+
+---
+
+## Components
+
+### app/components/FAQAccordion.tsx
+```tsx
+"use client";
+
+import { useState } from "react";
+
+type FaqItem = {
+  q: string;
+  a: string;
+};
+
+const FAQS: FaqItem[] = [
+  {
+    q: "Cât durează o cabană A-Frame la cheie?",
+    a: "În funcție de model, complexitate și teren, media este între 8 și 16 săptămâni după validarea proiectului tehnic.",
+  },
+  {
+    q: "Ce include 'la cheie' concret?",
+    a: "Structură, închideri, izolație pe straturi, tâmplărie, acoperiș, finisaje agreate și predare pregătită pentru utilizare.",
+  },
+  {
+    q: "Se poate pe structură de lemn / metal?",
+    a: "Da. Recomandarea finală vine după evaluarea deschiderilor, încărcărilor și a modului de utilizare al construcției.",
+  },
+  {
+    q: "Ce recomandări aveți pentru izolație?",
+    a: "Izolație stratificată corect, barieră de vapori montată atent, etanșare controlată și ventilație echilibrată pentru confort pe termen lung.",
+  },
+  {
+    q: "Lucrați în toată România?",
+    a: "Da, lucrăm național. Planificăm execuția în funcție de locație, acces pe teren și calendarul de montaj.",
+  },
+  {
+    q: "Cum pornesc: cu schiță sau doar cu o idee?",
+    a: "Ambele variante sunt bune. Pornim de la necesități, buget și teren, apoi construim împreună soluția corectă.",
+  },
+];
+
+export function FAQAccordion() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  return (
+    <section id="faq" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+      <div className="mb-10 max-w-2xl">
+        <p className="mb-3 text-sm tracking-[0.2em] text-[var(--pine-700)] uppercase">
+          Întrebări frecvente
+        </p>
+        <h2 className="font-display text-3xl md:text-4xl">
+          Răspunsuri clare înainte de decizia de construcție
+        </h2>
+      </div>
+      <div className="space-y-3">
+        {FAQS.map((item, idx) => {
+          const isOpen = openIndex === idx;
+          return (
+            <article
+              key={item.q}
+              className="rounded-2xl border border-[rgb(142_163_181/0.3)] bg-white/80 backdrop-blur-sm"
+            >
+              <h3>
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${idx}`}
+                  id={`faq-trigger-${idx}`}
+                  onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-medium md:px-6 md:py-5"
+                >
+                  <span>{item.q}</span>
+                  <span className="text-[var(--pine-700)]">{isOpen ? "−" : "+"}</span>
+                </button>
+              </h3>
+              <div
+                id={`faq-panel-${idx}`}
+                role="region"
+                aria-labelledby={`faq-trigger-${idx}`}
+                className="grid transition-all duration-500 ease-out"
+                style={{
+                  gridTemplateRows: isOpen ? "1fr" : "0fr",
+                  opacity: isOpen ? 1 : 0,
+                }}
+              >
+                <div className="overflow-hidden px-5 pb-5 text-[var(--ink-950)]/80 md:px-6">{item.a}</div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+```
+
+### app/components/PromoBar.tsx
+```tsx
+export function PromoBar() {
+  return (
+    <div className="fixed inset-x-0 top-0 z-[100] border-b border-[rgb(31_41_51/0.22)] bg-[#F2B94B] pt-[env(safe-area-inset-top)] text-[#1F2933]">
+      <div className="mx-auto grid h-[var(--promo-bar-height)] max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-2 px-3 text-[12px] font-normal md:hidden">
+        <span className="truncate">Concept demo</span>
+        <span className="whitespace-nowrap text-center">Dezvoltat de sky.ro</span>
+        <a href="tel:+40720088880" className="justify-self-end whitespace-nowrap text-right text-[#1F2933]">
+          +4 0720 088 880
+        </a>
+      </div>
+
+      <div className="mx-auto hidden h-[var(--promo-bar-height)] max-w-7xl items-center justify-between gap-4 px-4 text-[13px] font-normal md:flex">
+        <p className="min-w-0 whitespace-nowrap">
+          Concept demo • Conținut orientativ • Dezvoltat de sky.ro •{" "}
+          <a href="mailto:dan.trifan@sky.ro" className="text-[#1F2933] underline-offset-2 hover:underline">
+            dan.trifan@sky.ro
+          </a>{" "}
+          •{" "}
+          <a href="tel:+40720088880" className="text-[#1F2933] underline-offset-2 hover:underline">
+            +4 0720 088 880
+          </a>
+        </p>
+
+        <a
+          href="#contact"
+          className="rounded-md bg-[#2F80ED] px-3 py-1.5 text-[12px] font-normal text-white transition-colors hover:bg-[#246fda] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+        >
+          Cere ofertă
+        </a>
+      </div>
+    </div>
+  );
+}
+```
+
+### app/components/StickyHeader.tsx
+```tsx
+"use client";
+
+import { useEffect, useState } from "react";
+
+export function StickyHeader() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className={`fixed inset-x-0 top-[calc(var(--promo-bar-height)+env(safe-area-inset-top))] z-50 border-b transition-all duration-500 ${
+        scrolled
+          ? "border-[rgb(142_163_181/0.35)] bg-[rgb(238_246_251/0.72)] shadow-[0_8px_40px_rgb(11_18_32/0.08)] backdrop-blur-xl"
+          : "border-[rgb(142_163_181/0.2)] bg-[rgb(238_246_251/0.28)] backdrop-blur-md"
+      }`}
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-10">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl border border-[rgb(142_163_181/0.35)] bg-white/45" />
+          <span className="font-display text-xs md:text-base">Construcții Durabile</span>
+        </div>
+        <nav className="hidden gap-5 text-sm text-[var(--ink-950)]/75 md:flex">
+          <a href="#modele">Modele</a>
+          <a href="#proces">Proces</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a href="#contact" className="shine rounded-xl bg-[var(--pine-700)] px-3 py-2 text-xs text-white md:px-4 md:text-sm">
+          Cere ofertă
+        </a>
+      </div>
+    </header>
+  );
+}
+```
+
+### app/components/TriangleRevealHero.tsx
+```tsx
+"use client";
+
+import Image from "next/image";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function TriangleRevealHero() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const heroShellRef = useRef<HTMLDivElement | null>(null);
+  const leftPanelRef = useRef<HTMLElement | null>(null);
+  const rightPanelRef = useRef<HTMLElement | null>(null);
+  const glassDistortRef = useRef<HTMLDivElement | null>(null);
+  const handoffRef = useRef<HTMLDivElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const bottomTitleRef = useRef<HTMLDivElement | null>(null);
+  const bgGridRef = useRef<HTMLDivElement | null>(null);
+
+  useLayoutEffect(() => {
+    if (
+      !sectionRef.current ||
+      !heroShellRef.current ||
+      !leftPanelRef.current ||
+      !rightPanelRef.current ||
+      !glassDistortRef.current ||
+      !handoffRef.current ||
+      !overlayRef.current ||
+      !bottomTitleRef.current ||
+      !bgGridRef.current
+    )
+      return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      gsap.set(overlayRef.current, { opacity: 1, y: 0 });
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.set(overlayRef.current, { opacity: 0, y: 40, scale: 0.985 });
+      gsap.set(bottomTitleRef.current, { opacity: 0, y: 0 });
+      gsap.set(leftPanelRef.current, { x: 0, opacity: 1 });
+      gsap.set(rightPanelRef.current, { x: 0, opacity: 1 });
+
+      gsap.to(glassDistortRef.current, {
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "top+=35%",
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      gsap.to(heroShellRef.current, {
+        opacity: 0,
+        yPercent: -24,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top+=10% top",
+          end: "top+=48%",
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "bottom 95%",
+          end: "bottom 80%",
+          scrub: true,
+        },
+      }).to(
+        overlayRef.current,
+        {
+          opacity: 1,
+            y: 0,
+            scale: 1,
+            ease: "none",
+          },
+          0,
+      );
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "bottom 95%",
+          end: "bottom 80%",
+          scrub: true,
+        },
+      }).to(bottomTitleRef.current, { opacity: 1, ease: "none" }, 0);
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section id="hero" ref={sectionRef} className="relative isolate min-h-[210vh] overflow-clip md:min-h-[260vh]">
+      <div className="story-bg absolute inset-0 -z-20" />
+      <div className="absolute inset-x-0 top-0 -z-[6]">
+        <Image
+          src="/images/triangular-wooden-two-storey-house-in-the-north-of-2026-01-06-10-21-26-utc (1).jpg"
+          alt="Casă A-Frame din lemn realizată de Construcții Durabile"
+          width={3000}
+          height={6000}
+          priority
+          sizes="100vw"
+          className="block w-full h-auto"
+        />
+      </div>
+      <div ref={bgGridRef} className="blueprint-grid absolute inset-0 -z-10 opacity-30" />
+      <div className="noise-overlay absolute inset-0 -z-10 opacity-50" />
+
+      <div className="pointer-events-none absolute inset-x-0 top-18 z-40 hidden justify-center md:top-22 md:flex">
+        <div className="relative overflow-hidden rounded-2xl border border-[rgb(207_230_243/0.7)] bg-[linear-gradient(135deg,rgb(238_246_251/0.72),rgb(224_236_246/0.38))] px-5 py-4 backdrop-blur-2xl md:px-8">
+          <div className="absolute -inset-x-16 -top-12 h-16 rotate-6 bg-[linear-gradient(90deg,transparent,rgb(255_255_255/0.7),transparent)]" />
+          <div className="absolute inset-0 rounded-2xl shadow-[inset_0_1px_0_rgb(255_255_255/0.8),0_16px_60px_rgb(11_18_32/0.2)]" />
+          <div className="relative flex items-center gap-4">
+            <svg viewBox="0 0 120 90" aria-hidden className="h-10 w-12 text-[var(--ink-950)]/80 md:h-12 md:w-14">
+              <path d="M8 78 L60 10 L112 78" fill="none" stroke="currentColor" strokeWidth="3" />
+              <path d="M36 78 L60 44 L84 78" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.7" />
+            </svg>
+            <div>
+              <p className="font-display text-[11px] tracking-[0.3em] text-[var(--pine-700)] uppercase md:text-xs">Semnătură vizuală</p>
+              <p className="font-display text-base text-[var(--ink-950)] md:text-xl">A-Frame Premium</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="sticky top-0 z-20 h-[100svh] pt-14 md:pt-16">
+        <div className="absolute inset-0">
+          <div className="absolute left-0 top-0 h-full w-full bg-[linear-gradient(155deg,rgb(11_18_32/0.12),transparent_48%,rgb(11_18_32/0.15))]" />
+        </div>
+
+        <div ref={heroShellRef} className="relative z-20 mx-auto grid h-full max-w-[1500px] grid-cols-12 items-center gap-4 px-4 md:gap-6 md:px-10">
+          <article ref={leftPanelRef} className="col-span-12 rounded-3xl border border-[rgb(142_163_181/0.3)] bg-white/58 p-4 backdrop-blur-md md:col-span-3 md:p-7 xl:col-span-3">
+            <p className="text-xs tracking-[0.17em] text-[var(--pine-700)] uppercase">Cabane A-Frame • Lemn • La cheie</p>
+            <h1 className="font-display mt-2 text-2xl leading-tight md:mt-3 md:text-5xl">
+              Construcții din lemn care arată bine și rezistă.
+            </h1>
+            <p className="mt-3 text-[var(--ink-950)]/78">
+              Executăm corect: structură, îmbinări, izolație și finisaje — fără compromisuri.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-2 md:mt-5 md:gap-3">
+              <a href="#contact" className="shine rounded-xl bg-[var(--pine-700)] px-3 py-1.5 text-xs text-white md:rounded-2xl md:px-5 md:py-3 md:text-sm">Cere ofertă</a>
+              <a href="#modele" className="rounded-xl border border-[rgb(142_163_181/0.45)] bg-white/60 px-3 py-1.5 text-xs md:rounded-2xl md:px-5 md:py-3 md:text-sm">Vezi modele A-Frame</a>
+              <a href="#contact" className="text-xs underline decoration-[var(--oak-500)] md:self-center md:text-sm">Trimite schița ta</a>
+            </div>
+          </article>
+
+          <div className="col-span-12 hidden md:col-span-6 md:block" />
+
+          <aside ref={rightPanelRef} className="col-span-12 rounded-3xl border border-[rgb(142_163_181/0.3)] bg-white/58 p-4 backdrop-blur-md md:col-span-3 md:p-7 xl:col-span-3">
+            <h2 className="font-display text-xl">Ce construim</h2>
+            <ul className="mt-3 space-y-2 text-sm text-[var(--ink-950)]/78">
+              <li>• Cabane A-Frame</li>
+              <li>• Case din lemn</li>
+              <li>• Terase</li>
+              <li>• Foișoare</li>
+            </ul>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="rounded-full border border-[rgb(142_163_181/0.38)] bg-white/65 px-3 py-1 text-xs">Structură calculată</span>
+              <span className="rounded-full border border-[rgb(142_163_181/0.38)] bg-white/65 px-3 py-1 text-xs">Îmbinări curate</span>
+              <span className="rounded-full border border-[rgb(142_163_181/0.38)] bg-white/65 px-3 py-1 text-xs">Izolație corectă</span>
+            </div>
+            <p className="mt-4 text-xs text-[var(--ink-950)]/62">
+              Lucrăm în toată România (în funcție de proiect).
+            </p>
+          </aside>
+        </div>
+
+        <div ref={glassDistortRef} className="pointer-events-none absolute inset-0 z-10 liquid-distort opacity-20" />
+      </div>
+
+      <div ref={handoffRef} className="pointer-events-none absolute inset-x-0 bottom-0 z-30">
+        <div className="mx-auto flex max-w-[1400px] items-end px-4 pb-4 md:px-10">
+          <div
+            ref={overlayRef}
+            className="pointer-events-auto w-full max-w-xl rounded-3xl border border-[rgb(207_230_243/0.55)] bg-[rgb(238_246_251/0.62)] p-4 text-[var(--ink-950)] backdrop-blur-xl md:p-8"
+          >
+            <h3 className="font-display text-2xl md:text-3xl">Detalii proiect</h3>
+            <ul className="mt-4 space-y-2 text-sm md:text-base">
+              <li>• Lemn tratat</li>
+              <li>• Prinderi corecte</li>
+              <li>• Protecție la intemperii</li>
+            </ul>
+            <a
+              href="#contact"
+              className="shine mt-6 inline-block rounded-2xl bg-[var(--pine-700)] px-5 py-3 text-sm text-white"
+            >
+              Cere ofertă pentru proiectul tău
+            </a>
+            <div ref={bottomTitleRef} className="mt-5 rounded-2xl border border-[rgb(207_230_243/0.6)] bg-[rgb(255_255_255/0.32)] px-4 py-3 text-center">
+              <p className="font-display text-lg md:text-2xl">Foișor / terasă — execuție durabilă</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+### app/components/AFrame3D.tsx
+```tsx
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import styles from "./AFrame3D.module.css";
+
+gsap.registerPlugin(ScrollTrigger);
+
+type Props = {
+  scrollTriggerSelector?: string;
+};
+
+export default function AFrame3D({ scrollTriggerSelector = "#hero" }: Props) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const aframeRef = useRef<HTMLDivElement | null>(null);
+  const ridgeRef = useRef<HTMLDivElement | null>(null);
+  const linesRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const aframe = aframeRef.current;
+    const ridge = ridgeRef.current;
+    const lines = linesRef.current;
+    if (!root || !aframe || !ridge || !lines) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      aframe.style.opacity = "1";
+      return;
+    }
+
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+    });
+
+    const ctx = gsap.context(() => {
+      gsap.set(aframe, {
+        opacity: 0,
+        "--af-x": "0px",
+        "--af-y": "40px",
+        "--af-z": "-60px",
+        "--af-rx": "18deg",
+        "--af-ry": "-14deg",
+        "--af-s": "0.92",
+        "--mx": "0deg",
+        "--my": "0deg",
+      });
+
+      gsap.set(ridge, { scaleX: 0, transformOrigin: "50% 50%" });
+      gsap.set(lines, { opacity: 0 });
+
+      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      intro.to(aframe, { opacity: 1, duration: 0.4 });
+
+      intro.to(
+        aframe,
+        {
+          "--af-y": "0px",
+          "--af-z": "0px",
+          "--af-rx": "10deg",
+          "--af-ry": "-8deg",
+          "--af-s": "1",
+          duration: 1.15,
+        },
+        0,
+      );
+
+      intro.to(ridge, { scaleX: 1, duration: 0.8, ease: "power2.out" }, 0.25);
+      intro.to(lines, { opacity: 1, duration: 0.8, ease: "power2.out" }, 0.35);
+
+      const triggerEl = document.querySelector(scrollTriggerSelector) as HTMLElement | null;
+      if (!triggerEl) return;
+
+      gsap.to(aframe, {
+        "--af-ry": "10deg",
+        "--af-rx": "4deg",
+        "--af-y": "-10px",
+        "--af-z": "40px",
+        ease: "none",
+        scrollTrigger: {
+          trigger: triggerEl,
+          start: "top top",
+          end: "+=140%",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      gsap.to(aframe, {
+        "--af-s": "0.88",
+        ease: "none",
+        scrollTrigger: {
+          trigger: triggerEl,
+          start: "top top",
+          end: "+=140%",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      const qx = gsap.quickTo(aframe, "--mx", { duration: 0.6, ease: "power3.out" });
+      const qy = gsap.quickTo(aframe, "--my", { duration: 0.6, ease: "power3.out" });
+
+      const onMove = (e: PointerEvent) => {
+        const r = root.getBoundingClientRect();
+        const nx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+        const ny = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+        const cx = Math.max(-1, Math.min(1, nx));
+        const cy = Math.max(-1, Math.min(1, ny));
+        qx(cx * 3);
+        qy(-cy * 2);
+      };
+
+      root.addEventListener("pointermove", onMove);
+      ScrollTrigger.refresh();
+
+      return () => {
+        root.removeEventListener("pointermove", onMove);
+      };
+    }, root);
+
+    return () => ctx.revert();
+  }, [scrollTriggerSelector]);
+
+  return (
+    <div ref={rootRef} className={styles.scene} aria-hidden="true">
+      <div ref={aframeRef} className={styles.aframe}>
+        <div className={`${styles.face} ${styles.front}`} />
+        <div className={`${styles.face} ${styles.extrude}`} />
+        <div ref={linesRef} className={styles.lines}>
+          <span className={styles.beamH} />
+          <span className={styles.beamV} />
+        </div>
+        <div ref={ridgeRef} className={styles.ridge} />
+        <div className={styles.shadow} />
+      </div>
+    </div>
+  );
+}
+```
+
+### app/components/AFrame3D.module.css
+```css
+.scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.aframe {
+  position: absolute;
+  width: min(78vw, 980px);
+  aspect-ratio: 1 / 1;
+  transform-style: preserve-3d;
+  --af-x: 0px;
+  --af-y: 0px;
+  --af-z: 0px;
+  --af-rx: 10deg;
+  --af-ry: -8deg;
+  --af-s: 1;
+  --mx: 0deg;
+  --my: 0deg;
+  transform: translate3d(var(--af-x), var(--af-y), var(--af-z)) rotateX(calc(var(--af-rx) + var(--my))) rotateY(calc(var(--af-ry) + var(--mx))) scale(var(--af-s));
+  will-change: transform, opacity;
+  filter: drop-shadow(0 28px 40px rgba(11, 18, 32, 0.22));
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.front {
+  clip-path: polygon(50% 2%, 6% 98%, 94% 98%);
+  background: radial-gradient(120% 120% at 30% 10%, rgba(207, 230, 243, 0.85), rgba(15, 27, 45, 0.12) 48%, rgba(15, 27, 45, 0.26)),
+    linear-gradient(135deg, rgba(184, 137, 90, 0.06), rgba(142, 163, 181, 0.12));
+  border: 1px solid rgba(142, 163, 181, 0.32);
+  box-shadow: inset 0 0 0 1px rgba(207, 230, 243, 0.18);
+  transform: translateZ(0px);
+}
+
+.extrude {
+  width: 22%;
+  height: 100%;
+  right: -16%;
+  left: auto;
+  clip-path: polygon(0% 8%, 100% 14%, 100% 92%, 0% 98%);
+  background: linear-gradient(180deg, rgba(15, 27, 45, 0.55), rgba(15, 27, 45, 0.28)),
+    linear-gradient(90deg, rgba(142, 163, 181, 0.26), rgba(184, 137, 90, 0.1));
+  border: 1px solid rgba(142, 163, 181, 0.22);
+  transform: translateZ(-40px) rotateY(-65deg) translateX(-22px);
+  transform-origin: left center;
+  opacity: 0.9;
+}
+
+.ridge {
+  position: absolute;
+  left: 50%;
+  top: 3.5%;
+  width: 54%;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, rgba(207, 230, 243, 0), rgba(207, 230, 243, 0.85), rgba(207, 230, 243, 0));
+  opacity: 0.9;
+}
+
+.lines {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(50% 2%, 6% 98%, 94% 98%);
+}
+
+.beamH {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 44%;
+  height: 1px;
+  background: rgba(207, 230, 243, 0.55);
+  box-shadow: 0 0 0 1px rgba(142, 163, 181, 0.1);
+}
+
+.beamV {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  bottom: 10%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: rgba(207, 230, 243, 0.45);
+}
+
+.shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -9%;
+  width: 70%;
+  height: 18%;
+  transform: translateX(-50%) translateZ(-80px);
+  background: radial-gradient(closest-side, rgba(11, 18, 32, 0.25), rgba(11, 18, 32, 0));
+  filter: blur(10px);
+  opacity: 0.9;
+}
+```
+
+### app/components/LandingSections.tsx
+```tsx
+import Image from "next/image";
+import { AFrameProcessStory } from "./ProcessStory";
+
+const MODELS = [
+  {
+    name: "A-Frame Compact",
+    footprint: "42–58 mp",
+    use: "2–4 persoane",
+    time: "8–10 săptămâni",
+    image: "/images/model-compact.webp",
+  },
+  {
+    name: "A-Frame Family",
+    footprint: "68–92 mp",
+    use: "4–6 persoane",
+    time: "10–14 săptămâni",
+    image: "/images/model-family.jpg",
+  },
+  {
+    name: "A-Frame Panorama",
+    footprint: "85–120 mp",
+    use: "fațadă vitrată",
+    time: "12–16 săptămâni",
+    image: "/images/model-panorama.webp",
+  },
+  {
+    name: "A-Frame Nordic Loft",
+    footprint: "96–136 mp",
+    use: "dormitor înalt + living dublu",
+    time: "14–18 săptămâni",
+    image: "/images/terasa-2.jpg",
+  },
+];
+
+export function Header() {
+  return (
+    <header className="sticky top-0 z-50 border-b border-[rgb(142_163_181/0.3)] bg-[rgb(238_246_251/0.88)] backdrop-blur-md">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6 md:px-10">
+        <span className="font-display text-lg tracking-wide">Constructii Durabile</span>
+        <nav aria-label="Navigare principală" className="hidden gap-7 text-sm md:flex">
+          <a href="#modele">Modele</a>
+          <a href="#proces">Proces</a>
+          <a href="#terase">Terase</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a
+          href="#contact"
+          className="shine rounded-full bg-[var(--pine-700)] px-5 py-2 text-sm font-medium text-white"
+        >
+          Cere ofertă
+        </a>
+      </div>
+    </header>
+  );
+}
+
+export function AFrameHero() {
+  return (
+    <section className="relative overflow-hidden px-6 pb-18 pt-14 md:px-10 md:pt-18">
+      <div className="blueprint-grid pointer-events-none absolute inset-x-0 top-0 h-[78%] opacity-55" />
+      <div className="pointer-events-none absolute left-1/2 top-16 h-[70%] w-px -translate-x-1/2 bg-[rgb(142_163_181/0.45)]" />
+      <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-end">
+        <div className="relative rounded-[2rem] border border-[rgb(142_163_181/0.35)] bg-white/70 p-8 backdrop-blur-sm md:p-10">
+          <div className="mb-5 h-[2px] w-24 bg-[var(--oak-500)]" />
+          <h1 className="font-display text-4xl leading-tight md:text-6xl">
+            Cabane A-Frame construite corect. Pentru ani, nu pentru sezoane.
+          </h1>
+          <p className="mt-6 max-w-xl text-lg text-[var(--ink-950)]/78">
+            Proiectare + execuție din lemn, detalii curate, izolație gândită,
+            finisaje care rezistă.
+          </p>
+          <p className="mt-4 text-sm text-[var(--ink-950)]/65">
+            Garanție • Calitate • Personalizare după terenul tău
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#contact"
+              className="shine rounded-full bg-[var(--pine-700)] px-6 py-3 font-medium text-white"
+            >
+              Cere ofertă
+            </a>
+            <a
+              href="#modele"
+              className="rounded-full border border-[rgb(142_163_181/0.55)] px-6 py-3"
+            >
+              Vezi modele A-Frame
+            </a>
+            <a className="self-center text-sm underline decoration-[var(--oak-500)]" href="#contact">
+              Trimite schița / inspirația ta
+            </a>
+          </div>
+        </div>
+        <div className="group relative">
+          <div className="pointer-events-none absolute right-10 top-2 z-20 rounded-full border border-[rgb(212_106_76/0.5)] bg-[rgb(212_106_76/0.14)] px-4 py-1 text-xs text-[var(--ember-500)]">
+            A-Frame • Lemn • La cheie
+          </div>
+          <div className="aframe-mask shine relative aspect-[1/1.05] overflow-hidden border border-[rgb(142_163_181/0.6)] bg-[var(--slate-900)]">
+            <Image
+              src="/images/aframe-hero.webp"
+              alt="Cabană A-Frame modernă din lemn"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 44vw"
+              className="object-cover transition duration-500 group-hover:scale-105"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function StaggeredModels() {
+  return (
+    <section id="modele" className="mx-auto max-w-7xl px-4 py-18 md:px-10 md:py-24">
+      <div className="mb-8 flex items-end justify-between gap-6 md:mb-12">
+        <div>
+          <p className="mb-3 text-sm tracking-[0.2em] text-[var(--pine-700)] uppercase">
+            Modele A-Frame
+          </p>
+          <h2 className="font-display text-3xl md:text-5xl">Soluții calibrate pe teren și utilizare</h2>
+        </div>
+        <div className="hidden h-px w-36 bg-[var(--oak-500)] md:block" />
+      </div>
+
+      <div className="relative grid gap-5 md:grid-cols-2 md:gap-6">
+        <div className="pointer-events-none absolute left-[35%] top-10 hidden h-[75%] w-px -rotate-[27deg] bg-[rgb(142_163_181/0.5)] md:block" />
+        {MODELS.map((model, index) => (
+          <article
+            key={model.name}
+            className={`group rounded-[1.8rem] border border-[rgb(142_163_181/0.35)] bg-white p-5 transition hover:-translate-y-1 hover:border-[var(--glacier-200)] md:p-6 ${
+              index % 2 === 1 ? "md:mt-14" : ""
+            }`}
+          >
+            <div className="relative mb-4 h-48 overflow-hidden rounded-2xl md:mb-5 md:h-54">
+              <Image
+                src={model.image}
+                alt={`${model.name} - placeholder imagine`}
+                fill
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover transition duration-500 group-hover:scale-105"
+              />
+            </div>
+            <h3 className="font-display text-xl md:text-2xl">{model.name}</h3>
+            <p className="mt-2 text-sm text-[var(--ink-950)]/70">
+              {model.footprint} • {model.use} • Timp estimat: {model.time}
+            </p>
+            <p className="mt-4 text-sm uppercase tracking-wide text-[var(--steel-400)]">
+              Structură • Izolație • Tâmplărie • Acoperiș
+            </p>
+            <a href="#contact" className="mt-4 inline-block text-xs underline decoration-[var(--oak-500)] md:mt-6 md:text-sm">
+              Cere ofertă pentru acest model
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function ProofChips() {
+  const chips = [
+    "Structură calculată",
+    "Îmbinări curate",
+    "Barieră vapori corectă",
+    "Izolație pe straturi",
+    "Etanșare & ventilație",
+    "Finisaje rezistente la intemperii",
+  ];
+
+  return (
+    <section className="noise-overlay bg-[var(--slate-900)] px-4 py-18 text-white md:px-10 md:py-24">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-3 text-sm tracking-[0.2em] text-[var(--glacier-200)] uppercase">
+          De ce Constructii Durabile
+        </p>
+        <h2 className="font-display max-w-3xl text-3xl leading-tight md:text-5xl">
+          Nu vindem doar formă. Livrăm structură corectă, executată cu disciplină.
+        </h2>
+        <div className="relative mt-10">
+          <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-[linear-gradient(to_bottom,transparent,rgb(207_230_243/0.65),transparent)] md:block" />
+          <div className="space-y-4 md:space-y-5">
+            {chips.map((chip, index) => (
+              <div
+                key={chip}
+                className={`group relative w-full rounded-2xl border border-[rgb(142_163_181/0.35)] bg-[rgb(255_255_255/0.08)] px-4 py-3 text-sm backdrop-blur-sm transition duration-500 hover:-translate-y-0.5 hover:bg-[rgb(255_255_255/0.14)] md:w-[46%] md:px-5 md:py-4 ${
+                  index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
+                }`}
+              >
+                <span className="pointer-events-none absolute top-1/2 hidden h-px w-8 -translate-y-1/2 bg-[rgb(207_230_243/0.55)] md:block md:w-10" style={{ left: index % 2 === 0 ? "100%" : "auto", right: index % 2 === 0 ? "auto" : "100%" }} />
+                <p className="font-medium">{chip}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function AFrameProcessTimeline() {
+  return <AFrameProcessStory />;
+}
+
+export function AngledGallery() {
+  return (
+    <section id="terase" className="mx-auto max-w-7xl px-4 py-18 md:px-10 md:py-24">
+      <div className="mb-10 max-w-2xl">
+        <p className="mb-3 text-sm tracking-[0.2em] text-[var(--pine-700)] uppercase">Terase & Foișoare</p>
+        <h2 className="font-display text-3xl md:text-5xl">Extindem spațiul, păstrând stilul</h2>
+        <p className="mt-4 text-[var(--ink-950)]/75">
+          Lemn tratat, prinderi corecte, drenaj și protecție.
+        </p>
+      </div>
+      <div className="grid gap-4 md:grid-cols-[1.05fr_1fr] md:gap-5">
+        <figure className="relative h-[320px] overflow-hidden [clip-path:polygon(0_0,100%_2%,96%_100%,0_98%)] md:h-[460px]">
+          <Image src="/images/terasa-1.webp" alt="Terasă placată cu lemn" fill loading="lazy" className="object-cover" />
+        </figure>
+        <div className="grid gap-5">
+          <figure className="relative h-[180px] overflow-hidden [clip-path:polygon(2%_0,100%_0,98%_100%,0_100%)] md:h-[220px]">
+            <Image src="/images/foisor-1.jpg" alt="Foișor modern din lemn" fill loading="lazy" className="object-cover" />
+          </figure>
+          <figure className="relative h-[180px] overflow-hidden [clip-path:polygon(0_0,98%_2%,100%_100%,2%_100%)] md:h-[220px]">
+            <Image src="/images/terasa-2.jpg" alt="Detaliu balustradă terasă" fill loading="lazy" className="object-cover" />
+          </figure>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function ContactCTA() {
+  return (
+    <section id="contact" className="relative mx-auto max-w-7xl px-4 py-18 md:px-10 md:py-24">
+      <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-15" viewBox="0 0 800 400" aria-hidden>
+        <path d="M120 340 L400 60 L680 340" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      </svg>
+      <div className="relative overflow-hidden rounded-[2rem] border border-[rgb(142_163_181/0.35)] bg-[linear-gradient(145deg,rgb(255_255_255/0.92),rgb(238_246_251/0.88))] p-5 shadow-[0_24px_80px_rgb(11_18_32/0.08)] md:p-10">
+        <div className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-[radial-gradient(circle,rgb(184_137_90/0.22),transparent_70%)]" />
+        <h2 className="font-display max-w-2xl text-2xl leading-tight md:text-5xl">
+          Spune-ne terenul, bugetul și ideea. Noi revenim cu o propunere corectă.
+        </h2>
+        <form className="mt-6 grid gap-3 md:mt-8 md:gap-4 md:grid-cols-2">
+          <label className="text-sm">
+            Nume
+            <input className="mt-2 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="name" />
+          </label>
+          <label className="text-sm">
+            Telefon
+            <input className="mt-2 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="phone" />
+          </label>
+          <label className="text-sm">
+            Locație
+            <input className="mt-2 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="location" />
+          </label>
+          <label className="text-sm">
+            Tip proiect
+            <input className="mt-2 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="projectType" />
+          </label>
+          <label className="text-sm md:col-span-2">
+            Mesaj
+            <textarea className="mt-2 min-h-28 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="message" />
+          </label>
+          <div className="md:col-span-2">
+            <button type="submit" className="shine rounded-xl bg-[var(--pine-700)] px-3 py-1.5 text-xs text-white md:rounded-full md:px-6 md:py-3 md:text-sm">
+              Cere ofertă
+            </button>
+            <p className="mt-3 text-sm text-[var(--ink-950)]/70">Răspundem în 24–48h (lucrătoare).</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+export function Footer() {
+  return (
+    <footer className="border-t border-[rgb(142_163_181/0.3)] bg-[rgb(15_27_45/0.98)] px-6 py-10 text-[var(--glacier-200)] md:px-10">
+      <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
+        <div>
+          <p className="font-display text-xl text-white">Constructii Durabile</p>
+          <p className="mt-2 text-sm text-[var(--glacier-200)]/80">Cabane A-Frame, case din lemn, terase și foișoare.</p>
+        </div>
+        <div>
+          <p className="mb-2 text-sm text-white">Linkuri rapide</p>
+          <ul className="space-y-1 text-sm">
+            <li><a href="#modele">Modele</a></li>
+            <li><a href="#proces">Proces</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div className="text-sm">
+          <p className="mb-2 text-white">Arie de servicii</p>
+          <p className="text-[var(--glacier-200)]/80">Execuție în toată România, în funcție de planificare și acces pe teren.</p>
+          <p className="mt-2 text-[var(--glacier-200)]/70">Social: Instagram • Facebook • YouTube</p>
+          <div className="mt-4">
+            <p className="mb-2 text-xs tracking-[0.16em] text-[var(--glacier-200)]/75 uppercase">Crafted in the clouds by</p>
+            <a href="https://sky.ro" target="_blank" rel="noreferrer" className="inline-block">
+              <Image
+                src="/images/skyro-LOGO-6A-final -without tagline-01 (3).png"
+                alt="sky.ro"
+                width={150}
+                height={42}
+                className="h-8 w-auto object-contain"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+```
+
+### app/components/ProcessStory.tsx
+```tsx
+"use client";
+
+import Image from "next/image";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const STEPS = [
+  {
+    title: "Consultanță teren + nevoi",
+    detail:
+      "Analizăm terenul, accesul, orientarea solară și utilizarea reală a construcției. Stabilim de la început ce contează: structură, confort termic, cost total și timp realist de execuție.",
+  },
+  {
+    title: "Concept + ofertare",
+    detail:
+      "Propunem volumetrie, compartimentare, materiale și pachete de execuție. Primești o ofertă clară, cu etape, livrabile și opțiuni de ajustare fără compromisuri tehnice.",
+  },
+  {
+    title: "Proiectare detalii & materiale",
+    detail:
+      "Definim nodurile critice: îmbinări, straturi de izolație, etanșare, ventilație și protecții la apă. Alegem materiale potrivite pentru durabilitate, nu doar aspect.",
+  },
+  {
+    title: "Prefabricare / pregătire structură",
+    detail:
+      "Pregătim elementele structurale controlat, pentru montaj eficient și precis. Verificăm cote, poziții de prindere și compatibilitatea cu toate straturile ulterioare.",
+  },
+  {
+    title: "Montaj + închideri",
+    detail:
+      "Ridicăm structura pe șantier cu secvență clară de montaj. Închiderile sunt executate curat, cu atenție la punți termice, planeitate și stabilitate în timp.",
+  },
+  {
+    title: "Izolație + finisaje",
+    detail:
+      "Aplicăm corect stratificația: izolație, barieră de vapori, etanșare și finisaje. Obținem confort real iarna/vara și un rezultat premium, coerent arhitectural.",
+  },
+  {
+    title: "Predare + garanție",
+    detail:
+      "Facem recepția finală, verificări și predare cu recomandări clare de exploatare. Primești construcția pregătită pentru utilizare și suport post-predare.",
+  },
+];
+
+export function AFrameProcessStory() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const stickyRef = useRef<HTMLDivElement | null>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const detailsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useLayoutEffect(() => {
+    if (!sectionRef.current || !stickyRef.current) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    const ctx = gsap.context(() => {
+      cardsRef.current.forEach((card, i) => {
+        if (!card) return;
+        gsap.set(card, { opacity: 0, y: 60, scale: 0.9, x: i % 2 === 0 ? -90 : 90, width: 260, minHeight: 88 });
+      });
+      detailsRef.current.forEach((detail) => {
+        if (!detail) return;
+        gsap.set(detail, { opacity: 0, y: 16, height: 0 });
+      });
+      imagesRef.current.forEach((img, i) => {
+        if (!img) return;
+        gsap.set(img, { opacity: 0, y: 30, scale: 0.9, x: i % 2 === 0 ? 90 : -90 });
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: `+=${STEPS.length * 95}%`,
+          pin: stickyRef.current,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      cardsRef.current.forEach((card, i) => {
+        if (!card) return;
+        const at = i * 0.95;
+        tl.to(
+          card,
+          { opacity: 1, y: 0, x: 0, scale: 1, duration: 0.2, ease: "none" },
+          at,
+        )
+          .to(
+            card,
+            { width: "min(760px, 58vw)", minHeight: 320, borderRadius: 28, duration: 0.3, ease: "none" },
+            at + 0.2,
+          )
+          .to(
+            detailsRef.current[i],
+            { opacity: 1, y: 0, height: "auto", duration: 0.2, ease: "none" },
+            at + 0.36,
+          )
+          .to(
+            imagesRef.current[i],
+            { opacity: 1, y: 0, scale: 1, x: 0, duration: 0.2, ease: "none" },
+            at + 0.36,
+          )
+          .to(
+            card,
+            { opacity: 0, y: -130, duration: 0.28, ease: "none" },
+            at + 0.7,
+          )
+          .to(
+            imagesRef.current[i],
+            { opacity: 0, y: -130, duration: 0.28, ease: "none" },
+            at + 0.7,
+          );
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section id="proces" ref={sectionRef} className="relative mx-auto min-h-[680vh] max-w-7xl px-4 md:min-h-[760vh] md:px-10">
+      <div ref={stickyRef} className="relative h-[100svh] overflow-hidden py-16 md:py-24">
+        <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-30" />
+        <p className="mb-3 text-sm tracking-[0.2em] text-[var(--pine-700)] uppercase">Procesul nostru</p>
+        <h2 className="font-display mb-8 max-w-3xl text-2xl md:mb-10 md:text-5xl">
+          Linie de execuție clară, cu vârf în etapa de structură
+        </h2>
+
+        <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-[linear-gradient(to_bottom,transparent,rgb(142_163_181/0.55),transparent)] md:block" />
+
+        <div className="relative mt-4 h-[72vh] md:mt-6 md:h-[70vh]">
+          {STEPS.map((step, index) => (
+            <div
+              key={step.title}
+              ref={(el) => {
+                cardsRef.current[index] = el;
+              }}
+              className={`absolute top-1/2 z-20 w-[92vw] max-w-[560px] -translate-y-1/2 overflow-hidden rounded-3xl border border-[rgb(142_163_181/0.35)] bg-white/90 p-4 shadow-[0_18px_60px_rgb(11_18_32/0.1)] backdrop-blur-md md:w-[min(58vw,760px)] md:p-6 ${
+                index % 2 === 0 ? "left-0 md:left-[3%]" : "right-0 md:right-[3%]"
+              }`}
+            >
+              <span className="mb-3 inline-block rounded-full border border-[rgb(142_163_181/0.4)] px-3 py-1 text-xs text-[var(--steel-400)]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-display text-xl md:text-2xl">{step.title}</h3>
+              <div
+                ref={(el) => {
+                  detailsRef.current[index] = el;
+                }}
+                data-detail
+                className="mt-4 overflow-hidden"
+              >
+                <div className="grid gap-4">
+                <p className="text-sm leading-relaxed text-[var(--ink-950)]/78 md:text-base">{step.detail}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {STEPS.map((step, index) => (
+            <div
+              key={`${step.title}-img`}
+              ref={(el) => {
+                imagesRef.current[index] = el;
+              }}
+              className={`absolute top-1/2 z-10 hidden w-[240px] -translate-y-1/2 overflow-hidden rounded-3xl border border-[rgb(142_163_181/0.35)] bg-white/82 p-2 shadow-[0_18px_60px_rgb(11_18_32/0.12)] backdrop-blur-md xl:block xl:w-[min(22vw,320px)] ${
+                index % 2 === 0 ? "right-[3%]" : "left-[3%]"
+              }`}
+            >
+              <div className="relative h-44 overflow-hidden rounded-2xl [clip-path:polygon(50%_2%,6%_98%,94%_98%)] md:h-52">
+                <Image
+                  src="/images/foisor-1.jpg"
+                  alt="Imagine proiect construcție din lemn"
+                  fill
+                  sizes="(max-width: 768px) 90vw, 360px"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
