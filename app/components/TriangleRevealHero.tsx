@@ -151,10 +151,10 @@ export function TriangleRevealHero() {
           <div className="absolute left-0 top-0 h-full w-full bg-[linear-gradient(155deg,rgb(11_18_32/0.12),transparent_48%,rgb(11_18_32/0.15))]" />
         </div>
 
-        <div ref={heroShellRef} className="relative z-20 mx-auto grid h-full max-w-[1500px] grid-cols-1 items-center gap-4 px-4 md:grid-cols-12 md:gap-6 md:px-10">
+        <div ref={heroShellRef} className="relative z-30 mx-auto grid h-full max-w-[1500px] grid-cols-1 items-start gap-4 px-4 pt-4 md:grid-cols-12 md:items-center md:gap-6 md:px-10">
           
           {/* Panoul din Stânga */}
-          <article ref={leftPanelRef} className="rounded-3xl border border-[rgb(142_163_181/0.3)] bg-white/70 p-5 backdrop-blur-md md:col-span-4 xl:col-span-3 md:p-7">
+          <article ref={leftPanelRef} className="relative z-30 rounded-3xl border border-[rgb(142_163_181/0.3)] bg-white/70 p-5 backdrop-blur-md md:col-span-4 xl:col-span-3 md:p-7">
             <p className="text-[10px] font-bold tracking-[0.17em] text-[var(--pine-700)] uppercase md:text-xs">
               Case Modulare • Structuri Metalice • Garduri
             </p>
@@ -177,7 +177,7 @@ export function TriangleRevealHero() {
           <div className="hidden md:col-span-4 xl:col-span-6 md:block" />
 
           {/* Panoul din Dreapta */}
-          <aside ref={rightPanelRef} className="rounded-3xl border border-[rgb(142_163_181/0.3)] bg-white/70 p-5 backdrop-blur-md md:col-span-4 xl:col-span-3 md:p-7">
+          <aside ref={rightPanelRef} className="relative z-30 rounded-3xl border border-[rgb(142_163_181/0.3)] bg-white/70 p-5 backdrop-blur-md md:col-span-4 xl:col-span-3 md:p-7">
             <h2 className="font-display text-xl md:text-2xl">Ce construim</h2>
             <ul className="mt-3 space-y-2 text-sm text-[var(--ink-950)]/80 md:text-base">
               <li>• Case Modulare (Panou Sandwich)</li>
