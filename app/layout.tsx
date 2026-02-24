@@ -15,24 +15,18 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://constructiiromania.haionline.ro"),
-  title: "Construcții România – Cabane A-Frame, Case din Lemn, Terase & Foișoare",
-  description:
-    "Construcții România proiectează și execută cabane A-Frame, case din lemn, terase și foișoare la nivel național. Structuri corect executate și garanție.",
+  metadataBase: new URL("https://constructiiromania.ro"),
+  title: "Construcții România – Case Modulare, Cabane A-Frame & Garduri",
+  description: "Construim case modulare pe structură metalică, cabane A-Frame, garaje și garduri în toată România. ZERO Avans, plata eșalonată, 10+ ani experiență.",
+  icons: {
+    icon: ["/images/logo.png"],
+    apple: "/images/logo.png",
+  },
   openGraph: {
-    title: "Construcții România – Cabane A-Frame, Case din Lemn, Terase & Foișoare",
-    description:
-      "Proiectare + execuție pentru cabane A-Frame, case din lemn, terase și foișoare. Durabilitate, detalii curate și garanție.",
+    title: "Construcții România – Case Modulare, Cabane A-Frame & Garduri",
+    description: "Construim case modulare pe structură metalică, cabane A-Frame, garaje și garduri în toată România. ZERO Avans, plata eșalonată.",
     locale: "ro_RO",
     type: "website",
-    images: [
-      {
-        url: "/images/aframe-hero.webp",
-        width: 1200,
-        height: 630,
-        alt: "Cabana A-Frame Construcții România",
-      },
-    ],
   },
 };
 

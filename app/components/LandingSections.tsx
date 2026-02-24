@@ -1,34 +1,24 @@
 import Image from "next/image";
 import { AFrameProcessStory } from "./ProcessStory";
 
-const MODELS = [
+const CATEGORIES = [
   {
-    name: "A-Frame Compact",
-    footprint: "42–58 mp",
-    use: "2–4 persoane",
-    time: "8–10 săptămâni",
-    image: "/images/model-compact.webp",
+    name: "Case Modulare & Containere",
+    description: "Structură metalică 100x100x3mm și panouri sandwich termoizolante. La roșu sau la cheie.",
+    use: "Locuințe, birouri, garaje auto",
+    image: "/images/model-family.jpg", // Schimbă cu o poză cu casă modulară
   },
   {
-    name: "A-Frame Family",
-    footprint: "68–92 mp",
-    use: "4–6 persoane",
-    time: "10–14 săptămâni",
-    image: "/images/model-family.jpg",
+    name: "Cabane A-Frame & Case Lemn",
+    description: "Arhitectură deosebită, mediu de locuit sănătos, materiale premium.",
+    use: "Case de vacanță, locuințe permanente",
+    image: "/images/aframe-hero.webp",
   },
   {
-    name: "A-Frame Panorama",
-    footprint: "85–120 mp",
-    use: "fațadă vitrată",
-    time: "12–16 săptămâni",
-    image: "/images/model-panorama.webp",
-  },
-  {
-    name: "A-Frame Nordic Loft",
-    footprint: "96–136 mp",
-    use: "dormitor înalt + living dublu",
-    time: "14–18 săptămâni",
-    image: "/images/terasa-2.jpg",
+    name: "Garduri și Porți (Orice model)",
+    description: "Jaluzea, șipcă metalică, fier forjat, tablă cutată, plasă, beton sau lemn. Înălțimi 1m - 2m.",
+    use: "Cu sau fără fundație/stâlpi",
+    image: "/images/terasa-1.webp", // Schimbă cu o poză cu un gard modern
   },
 ];
 
@@ -36,123 +26,63 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[rgb(142_163_181/0.3)] bg-[rgb(238_246_251/0.88)] backdrop-blur-md">
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6 md:px-10">
-        <span className="font-display text-lg tracking-wide">Construcții România</span>
-        <nav aria-label="Navigare principală" className="hidden gap-7 text-sm md:flex">
-          <a href="#modele">Modele</a>
+        <a href="#" className="flex items-center gap-2">
+          <Image
+            src="/images/logo.png"
+            alt="Construcții România"
+            width={120}
+            height={40}
+            className="h-10 w-auto object-contain"
+          />
+        </a>
+        <nav aria-label="Navigare principală" className="hidden gap-7 text-sm font-medium md:flex">
+          <a href="#servicii">Servicii</a>
+          <a href="#detalii-tehnice">Detalii Tehnice</a>
           <a href="#proces">Proces</a>
-          <a href="#terase">Terase</a>
           <a href="#faq">FAQ</a>
-          <a href="#contact">Contact</a>
         </nav>
-        <a
-          href="#contact"
-          className="shine rounded-full bg-[var(--pine-700)] px-5 py-2 text-sm font-medium text-white"
-        >
-          Cere ofertă
+        <a href="#contact" className="shine rounded-full bg-[var(--pine-700)] px-5 py-2 text-sm font-medium text-white">
+          0758 887 616
         </a>
       </div>
     </header>
   );
 }
 
-export function AFrameHero() {
-  return (
-    <section className="relative overflow-hidden px-6 pb-18 pt-14 md:px-10 md:pt-18">
-      <div className="blueprint-grid pointer-events-none absolute inset-x-0 top-0 h-[78%] opacity-55" />
-      <div className="pointer-events-none absolute left-1/2 top-16 h-[70%] w-px -translate-x-1/2 bg-[rgb(142_163_181/0.45)]" />
-      <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-end">
-        <div className="relative rounded-[2rem] border border-[rgb(142_163_181/0.35)] bg-white/70 p-8 backdrop-blur-sm md:p-10">
-          <div className="mb-5 h-[2px] w-24 bg-[var(--oak-500)]" />
-          <h1 className="font-display text-4xl leading-tight md:text-6xl">
-            Cabane A-Frame construite corect. Pentru ani, nu pentru sezoane.
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-[var(--ink-950)]/78">
-            Proiectare + execuție din lemn, detalii curate, izolație gândită,
-            finisaje care rezistă.
-          </p>
-          <p className="mt-4 text-sm text-[var(--ink-950)]/65">
-            Garanție • Calitate • Personalizare după terenul tău
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#contact"
-              className="shine rounded-full bg-[var(--pine-700)] px-6 py-3 font-medium text-white"
-            >
-              Cere ofertă
-            </a>
-            <a
-              href="#modele"
-              className="rounded-full border border-[rgb(142_163_181/0.55)] px-6 py-3"
-            >
-              Vezi modele A-Frame
-            </a>
-            <a className="self-center text-sm underline decoration-[var(--oak-500)]" href="#contact">
-              Trimite schița / inspirația ta
-            </a>
-          </div>
-        </div>
-        <div className="group relative">
-          <div className="pointer-events-none absolute right-10 top-2 z-20 rounded-full border border-[rgb(212_106_76/0.5)] bg-[rgb(212_106_76/0.14)] px-4 py-1 text-xs text-[var(--ember-500)]">
-            A-Frame • Lemn • La cheie
-          </div>
-          <div className="aframe-mask shine relative aspect-[1/1.05] overflow-hidden border border-[rgb(142_163_181/0.6)] bg-[var(--slate-900)]">
-            <Image
-              src="/images/aframe-hero.webp"
-              alt="Cabană A-Frame modernă din lemn"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 44vw"
-              className="object-cover transition duration-500 group-hover:scale-105"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function StaggeredModels() {
   return (
-    <section id="modele" className="mx-auto max-w-7xl px-4 py-18 md:px-10 md:py-24">
+    <section id="servicii" className="mx-auto max-w-7xl px-4 py-18 md:px-10 md:py-24">
       <div className="mb-8 flex items-end justify-between gap-6 md:mb-12">
         <div>
           <p className="mb-3 text-sm tracking-[0.2em] text-[var(--pine-700)] uppercase">
-            Modele A-Frame
+            Portofoliu Servicii
           </p>
-          <h2 className="font-display text-3xl md:text-5xl">Soluții calibrate pe teren și utilizare</h2>
+          <h2 className="font-display text-3xl md:text-5xl">De la fundație până la cheie. Peste tot în țară.</h2>
         </div>
         <div className="hidden h-px w-36 bg-[var(--oak-500)] md:block" />
       </div>
 
-      <div className="relative grid gap-5 md:grid-cols-2 md:gap-6">
-        <div className="pointer-events-none absolute left-[35%] top-10 hidden h-[75%] w-px -rotate-[27deg] bg-[rgb(142_163_181/0.5)] md:block" />
-        {MODELS.map((model, index) => (
+      <div className="relative grid gap-5 md:grid-cols-3 md:gap-6">
+        {CATEGORIES.map((cat, index) => (
           <article
-            key={model.name}
-            className={`group rounded-[1.8rem] border border-[rgb(142_163_181/0.35)] bg-white p-5 transition hover:-translate-y-1 hover:border-[var(--glacier-200)] md:p-6 ${
-              index % 2 === 1 ? "md:mt-14" : ""
-            }`}
+            key={cat.name}
+            className="group rounded-[1.8rem] border border-[rgb(142_163_181/0.35)] bg-white p-5 transition hover:-translate-y-1 hover:border-[var(--oak-500)] md:p-6"
           >
-              <div className="relative mb-4 h-48 overflow-hidden rounded-2xl md:mb-5 md:h-54">
+            <div className="relative mb-4 h-48 overflow-hidden rounded-2xl md:mb-5">
               <Image
-                src={model.image}
-                alt={`${model.name} - placeholder imagine`}
+                src={cat.image}
+                alt={cat.name}
                 fill
                 loading="lazy"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
-              <h3 className="font-display text-xl md:text-2xl">{model.name}</h3>
-            <p className="mt-2 text-sm text-[var(--ink-950)]/70">
-              {model.footprint} • {model.use} • Timp estimat: {model.time}
+            <h3 className="font-display text-xl">{cat.name}</h3>
+            <p className="mt-2 text-sm text-[var(--ink-950)]/70">{cat.description}</p>
+            <p className="mt-4 text-xs font-bold uppercase tracking-wide text-[var(--pine-700)]">
+              Destinație: {cat.use}
             </p>
-            <p className="mt-4 text-sm uppercase tracking-wide text-[var(--steel-400)]">
-              Structură • Izolație • Tâmplărie • Acoperiș
-            </p>
-            <a href="#contact" className="mt-4 inline-block text-xs underline decoration-[var(--oak-500)] md:mt-6 md:text-sm">
-              Cere ofertă pentru acest model
-            </a>
           </article>
         ))}
       </div>
@@ -162,12 +92,12 @@ export function StaggeredModels() {
 
 export function ProofChips() {
   const chips = [
-    "Structură calculată",
-    "Îmbinări curate",
-    "Barieră vapori corectă",
-    "Izolație pe straturi",
-    "Etanșare & ventilație",
-    "Finisaje rezistente la intemperii",
+    "AVANS 0% - Plată eșalonată",
+    "Peste 10 ani experiență",
+    "Acoperire Națională Gratuită",
+    "Factură, deviz și garanție",
+    "Update-uri Video pe WhatsApp",
+    "Acceptăm variante auto +/-",
   ];
 
   return (
@@ -177,7 +107,7 @@ export function ProofChips() {
           De ce Construcții România
         </p>
         <h2 className="font-display max-w-3xl text-3xl leading-tight md:text-5xl">
-          Nu vindem doar formă. Livrăm structură corectă, executată cu disciplină.
+          Fără bătăi de cap. Lucrăm de la A la Z cu echipe calificate.
         </h2>
         <div className="relative mt-10">
           <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-[linear-gradient(to_bottom,transparent,rgb(207_230_243/0.65),transparent)] md:block" />
@@ -189,8 +119,7 @@ export function ProofChips() {
                   index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
                 }`}
               >
-                <span className="pointer-events-none absolute top-1/2 hidden h-px w-8 -translate-y-1/2 bg-[rgb(207_230_243/0.55)] md:block md:w-10" style={{ left: index % 2 === 0 ? "100%" : "auto", right: index % 2 === 0 ? "auto" : "100%" }} />
-                <p className="font-medium">{chip}</p>
+                <p className="font-medium text-base">{chip}</p>
               </div>
             ))}
           </div>
@@ -200,31 +129,41 @@ export function ProofChips() {
   );
 }
 
-export function AFrameProcessTimeline() {
-  return <AFrameProcessStory />;
-}
-
-export function AngledGallery() {
+export function TechnicalSpecs() {
   return (
-    <section id="terase" className="mx-auto max-w-7xl px-4 py-18 md:px-10 md:py-24">
-      <div className="mb-10 max-w-2xl">
-        <p className="mb-3 text-sm tracking-[0.2em] text-[var(--pine-700)] uppercase">Terase & Foișoare</p>
-        <h2 className="font-display text-3xl md:text-5xl">Extindem spațiul, păstrând stilul</h2>
-        <p className="mt-4 text-[var(--ink-950)]/75">
-          Lemn tratat, prinderi corecte, drenaj și protecție.
+    <section id="detalii-tehnice" className="mx-auto max-w-7xl px-4 py-16 md:px-10 md:py-24">
+      <div className="mb-8 md:mb-10 max-w-2xl">
+        <p className="mb-2 md:mb-3 text-xs md:text-sm font-bold tracking-[0.2em] text-[var(--pine-700)] uppercase">
+          Transparență Totală
+        </p>
+        <h2 className="font-display text-3xl md:text-5xl">Detalii Tehnice: Case Modulare</h2>
+        <p className="mt-3 md:mt-4 text-sm md:text-base text-[var(--ink-950)]/75">
+          Alege stadiul la care dorești să îți predăm lucrarea.
         </p>
       </div>
-      <div className="grid gap-4 md:grid-cols-[1.05fr_1fr] md:gap-5">
-        <figure className="relative h-[320px] overflow-hidden [clip-path:polygon(0_0,100%_2%,96%_100%,0_98%)] md:h-[460px]">
-          <Image src="/images/terasa-1.webp" alt="Terasă placată cu lemn" fill loading="lazy" className="object-cover" />
-        </figure>
-        <div className="grid gap-5">
-          <figure className="relative h-[180px] overflow-hidden [clip-path:polygon(2%_0,100%_0,98%_100%,0_100%)] md:h-[220px]">
-            <Image src="/images/foisor-1.jpg" alt="Foișor modern din lemn" fill loading="lazy" className="object-cover" />
-          </figure>
-          <figure className="relative h-[180px] overflow-hidden [clip-path:polygon(0_0,98%_2%,100%_100%,2%_100%)] md:h-[220px]">
-            <Image src="/images/terasa-2.jpg" alt="Detaliu balustradă terasă" fill loading="lazy" className="object-cover" />
-          </figure>
+      
+      <div className="grid gap-5 md:grid-cols-2 md:gap-8">
+        {/* Constructie la rosu */}
+        <div className="rounded-3xl border border-[rgb(142_163_181/0.4)] bg-white/80 p-5 shadow-sm md:p-8">
+          <h3 className="font-display text-xl md:text-2xl mb-4 font-bold text-[var(--oak-500)]">1. Construcție "La Roșu"</h3>
+          <ul className="space-y-3 text-sm md:text-base text-[var(--ink-950)]/80">
+            <li><strong className="text-[var(--pine-700)]">Talpa casei:</strong> fundație sau piloni.</li>
+            <li><strong className="text-[var(--pine-700)]">Pereți:</strong> structură metalică 100x100x3mm; panouri sandwich termoizolante 100mm.</li>
+            <li><strong className="text-[var(--pine-700)]">Tavan:</strong> grinzi 150x100mm (la 60cm); scândură 25mm.</li>
+            <li><strong className="text-[var(--pine-700)]">Acoperiș:</strong> grinzi 150x100mm (la 60cm); scândură 25mm; folie.</li>
+          </ul>
+        </div>
+
+        {/* Constructie la gata */}
+        <div className="rounded-3xl border border-[rgb(142_163_181/0.4)] bg-white/80 p-5 shadow-sm md:p-8">
+          <h3 className="font-display text-xl md:text-2xl mb-4 font-bold text-[var(--pine-700)]">2. Construcție "La Cheie"</h3>
+          <ul className="space-y-3 text-sm md:text-base text-[var(--ink-950)]/80">
+            <li><strong className="text-[var(--pine-700)]">Talpa casei:</strong> gresie și parchet; instalații sanitare.</li>
+            <li><strong className="text-[var(--pine-700)]">Pereți exteriori:</strong> polistiren 100mm; tencuială; plasă; finisaj decorativ.</li>
+            <li><strong className="text-[var(--pine-700)]">Pereți interiori:</strong> vată bazaltică 100mm; instalații electrice; rigips; lavabilă; geamuri/uși PVC.</li>
+            <li><strong className="text-[var(--pine-700)]">Tavan:</strong> vată bazaltică 150mm; rigips; vopsea lavabilă.</li>
+            <li><strong className="text-[var(--pine-700)]">Acoperiș:</strong> caroiaj șipcă; tablă tip țiglă metalică; accesorii.</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -233,68 +172,60 @@ export function AngledGallery() {
 
 export function ContactCTA() {
   return (
-    <section id="contact" className="relative mx-auto max-w-7xl px-4 py-18 md:px-10 md:py-24">
-      <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-15" viewBox="0 0 800 400" aria-hidden>
-        <path d="M120 340 L400 60 L680 340" fill="none" stroke="currentColor" strokeWidth="1.3" />
-      </svg>
-      <div className="relative overflow-hidden rounded-[2rem] border border-[rgb(142_163_181/0.35)] bg-[linear-gradient(145deg,rgb(255_255_255/0.92),rgb(238_246_251/0.88))] p-5 shadow-[0_24px_80px_rgb(11_18_32/0.08)] md:p-10">
-        <div className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-[radial-gradient(circle,rgb(184_137_90/0.22),transparent_70%)]" />
-        <h2 className="font-display max-w-2xl text-2xl leading-tight md:text-5xl">
-          Spune-ne terenul, bugetul și ideea. Noi revenim cu o propunere corectă.
+    <section id="contact" className="relative mx-auto max-w-7xl px-4 py-16 md:px-10 md:py-24">
+      <div className="relative overflow-hidden rounded-[2rem] border border-[rgb(142_163_181/0.4)] bg-[linear-gradient(145deg,rgb(255_255_255/0.95),rgb(238_246_251/0.9))] p-6 shadow-xl md:p-12 text-center">
+        <h2 className="font-display mx-auto max-w-3xl text-3xl leading-tight md:text-5xl">
+          Ești gata să începi proiectul tău?
         </h2>
-        <form className="mt-6 grid gap-3 md:mt-8 md:gap-4 md:grid-cols-2">
-          <label className="text-sm">
-            Nume
-            <input className="mt-2 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="name" />
-          </label>
-          <label className="text-sm">
-            Telefon
-            <input className="mt-2 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="phone" />
-          </label>
-          <label className="text-sm">
-            Locație
-            <input className="mt-2 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="location" />
-          </label>
-          <label className="text-sm">
-            Tip proiect
-            <input className="mt-2 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="projectType" />
-          </label>
-          <label className="text-sm md:col-span-2">
-            Mesaj
-            <textarea className="mt-2 min-h-28 w-full rounded-xl border border-[rgb(142_163_181/0.45)] px-4 py-3" name="message" />
-          </label>
-          <div className="md:col-span-2">
-            <button type="submit" className="shine rounded-xl bg-[var(--pine-700)] px-3 py-1.5 text-xs text-white md:rounded-full md:px-6 md:py-3 md:text-sm">
-              Cere ofertă
-            </button>
-            <p className="mt-3 text-sm text-[var(--ink-950)]/70">Răspundem în 24–48h (lucrătoare).</p>
-          </div>
-        </form>
+        <p className="mt-4 text-sm md:text-lg text-[var(--ink-950)]/80 max-w-2xl mx-auto">
+          Contactează-ne acum pentru consultanță gratuită. Suntem mereu disponibili. 
+          <br className="hidden md:block"/> 
+          <strong className="text-[var(--pine-700)]">Transport și montaj GRATUT în toată țara. ZERO Avans.</strong>
+        </p>
+        
+        {/* Butoanele devin stivuite (pe coloană) pe mobil și pe același rând de la sm în sus */}
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a href="tel:+40758887616" className="shine flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--pine-700)] px-6 py-4 text-base font-bold text-white shadow-lg transition-transform hover:scale-105 sm:w-auto md:text-lg">
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            0758 887 616
+          </a>
+          
+          <a href="https://wa.me/40758887616" target="_blank" rel="noreferrer" className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-[var(--pine-700)] bg-transparent px-6 py-4 text-base font-bold text-[var(--pine-700)] transition-colors hover:bg-[var(--pine-700)] hover:text-white sm:w-auto md:text-lg">
+            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Scrie-ne pe WhatsApp
+          </a>
+        </div>
       </div>
     </section>
   );
 }
 
+// Process timeline component - reuses the existing ProcessStory
+export function AFrameProcessTimeline() {
+  return <AFrameProcessStory />;
+}
+
+// Footer component - simplified for new layout
 export function Footer() {
   return (
     <footer className="border-t border-[rgb(142_163_181/0.3)] bg-[rgb(15_27_45/0.98)] px-6 py-10 text-[var(--glacier-200)] md:px-10">
       <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
         <div>
           <p className="font-display text-xl text-white">Construcții România</p>
-          <p className="mt-2 text-sm text-[var(--glacier-200)]/80">Cabane A-Frame, case din lemn, terase și foișoare.</p>
+          <p className="mt-2 text-sm text-[var(--glacier-200)]/80">Case modulare, cabane A-Frame, garduri și porți.</p>
         </div>
         <div>
           <p className="mb-2 text-sm text-white">Linkuri rapide</p>
           <ul className="space-y-1 text-sm">
-            <li><a href="#modele">Modele</a></li>
+            <li><a href="#servicii">Servicii</a></li>
+            <li><a href="#detalii-tehnice">Detalii Tehnice</a></li>
             <li><a href="#proces">Proces</a></li>
             <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contact">Contact</a></li>
           </ul>
         </div>
         <div className="text-sm">
           <p className="mb-2 text-white">Arie de servicii</p>
-          <p className="text-[var(--glacier-200)]/80">Execuție în toată România, în funcție de planificare și acces pe teren.</p>
+          <p className="text-[var(--glacier-200)]/80">Acoperire națională cu transport și montaj gratuit în toată România.</p>
           <p className="mt-2 text-[var(--glacier-200)]/70">Social: Instagram • Facebook • YouTube</p>
           <div className="mt-4">
             <p className="mb-2 text-xs tracking-[0.16em] text-[var(--glacier-200)]/75 uppercase">Crafted in the clouds by</p>
@@ -313,4 +244,3 @@ export function Footer() {
     </footer>
   );
 }
-

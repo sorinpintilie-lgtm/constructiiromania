@@ -4,7 +4,7 @@ import { StickyHeader } from "./components/StickyHeader";
 import { TriangleRevealHero } from "./components/TriangleRevealHero";
 import {
   AFrameProcessTimeline,
-  AngledGallery,
+  TechnicalSpecs,
   ContactCTA,
   Footer,
   ProofChips,
@@ -43,7 +43,7 @@ export default function Home() {
         <StaggeredModels />
         <ProofChips />
         <AFrameProcessTimeline />
-        <AngledGallery />
+        <TechnicalSpecs />
         <FAQAccordion />
         <ContactCTA />
       </main>

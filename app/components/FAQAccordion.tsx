@@ -9,28 +9,24 @@ type FaqItem = {
 
 const FAQS: FaqItem[] = [
   {
-    q: "Cât durează o cabană A-Frame la cheie?",
-    a: "În funcție de model, complexitate și teren, media este între 8 și 16 săptămâni după validarea proiectului tehnic.",
+    q: "Ce înseamnă AVANS 0%?",
+    a: "Nu solicităm bani în avans înainte de a începe lucrarea. Plata se face eșalonat, exact în ritmul în care avansează lucrarea pe șantier.",
   },
   {
-    q: "Ce include ‘la cheie’ concret?",
-    a: "Structură, închideri, izolație pe straturi, tâmplărie, acoperiș, finisaje agreate și predare pregătită pentru utilizare.",
+    q: "Lucrați și în afara județului?",
+    a: "Da, ne deplasăm cu echipa în toată România, fără absolut niciun cost suplimentar de transport sau cazare.",
   },
   {
-    q: "Se poate pe structură de lemn / metal?",
-    a: "Da. Recomandarea finală vine după evaluarea deschiderilor, încărcărilor și a modului de utilizare al construcției.",
+    q: "Cum funcționează plata cu variante auto?",
+    a: "Acceptăm anumite autoturisme ca metodă de plată (totală sau parțială) +/- diferență, în urma unei evaluări corecte de ambele părți.",
   },
   {
-    q: "Ce recomandări aveți pentru izolație?",
-    a: "Izolație stratificată corect, barieră de vapori montată atent, etanșare controlată și ventilație echilibrată pentru confort pe termen lung.",
+    q: "Pentru garduri, trebuie să cumpăr eu materialele?",
+    a: "Gardul poate fi construit fie din materialele noastre (la cheie), fie doar montaj, folosind materialele furnizate de dumneavoastră.",
   },
   {
-    q: "Lucrați în toată România?",
-    a: "Da, lucrăm național. Planificăm execuția în funcție de locație, acces pe teren și calendarul de montaj.",
-  },
-  {
-    q: "Cum pornesc: cu schiță sau doar cu o idee?",
-    a: "Ambele variante sunt bune. Pornim de la necesități, buget și teren, apoi construim împreună soluția corectă.",
+    q: "Pot vedea stadiul lucrării dacă nu sunt prezent?",
+    a: "Sigur! Oferim demonstrații video pe WhatsApp pentru fiecare etapă a construcției și vă îndrumăm către locații unde am mai construit.",
   },
 ];
 
@@ -87,4 +83,3 @@ export function FAQAccordion() {
     </section>
   );
 }
-

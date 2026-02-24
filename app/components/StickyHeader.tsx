@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export function StickyHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,17 +22,23 @@ export function StickyHeader() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-10">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl border border-[rgb(142_163_181/0.35)] bg-white/45" />
-          <span className="font-display text-xs md:text-base">Construcții România</span>
-        </div>
+        <a href="#" className="flex items-center gap-3">
+          <Image
+            src="/images/logo.png"
+            alt="Construcții România"
+            width={100}
+            height={35}
+            className="h-9 w-auto object-contain"
+          />
+        </a>
         <nav className="hidden gap-5 text-sm text-[var(--ink-950)]/75 md:flex">
-          <a href="#modele">Modele</a>
+          <a href="#servicii">Servicii</a>
+          <a href="#detalii-tehnice">Detalii Tehnice</a>
           <a href="#proces">Proces</a>
-          <a href="#contact">Contact</a>
+          <a href="#faq">FAQ</a>
         </nav>
         <a href="#contact" className="shine rounded-xl bg-[var(--pine-700)] px-3 py-2 text-xs text-white md:px-4 md:text-sm">
-          Cere ofertă
+          0758 887 616
         </a>
       </div>
     </header>
